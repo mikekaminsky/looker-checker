@@ -144,14 +144,12 @@ class Verify:
         query_response = query_client.create_query(body=query_body)
         return query_response.id
 
-    def run(self):
+    def run(self, selected_models):
         logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
         token, client = self.get_token_client()
         model_client = looker.LookmlModelApi(client)
         query_client = looker.QueryApi(client)
         start = time.time()
-
-        selected_models = sys.argv[1:]
 
         def is_checkable(model):
             return model.has_content and (
